@@ -16,6 +16,12 @@ defmodule ContactManagementSystemWeb.Router do
     post "/users/signin", UserController, :signin
   end
 
+  scope "/api", ContactManagementSystemWeb do
+    pipe_through [:api, :auth]
+
+    resources "/contacts", ContactController
+  end
+
   pipeline :browser do
     plug(:accepts, ["html"])
   end

@@ -3,6 +3,8 @@ defmodule ContactManagementSystem.Accounts.User do
   import Ecto.Changeset
 
   schema "users" do
+    has_many :contacts, ContactManagementSystem.Contacts.Contact
+
     field :email, :string
     field :encrypted_password, :string
     field :password, :string, virtual: true
