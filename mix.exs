@@ -45,7 +45,9 @@ defmodule ContactManagementSystem.MixProject do
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:poison, ">= 3.1.0"},
-      {:timex, "~> 3.2"}
+      {:timex, "~> 3.2"},
+      {:bamboo, "~> 0.7"},
+      {:bamboo_smtp, "~> 1.2.1"}
     ]
   end
 

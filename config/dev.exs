@@ -21,6 +21,16 @@ config :contact_management_system, ContactManagementSystemWeb.Endpoint,
     ]
   ]
 
+config :contact_management_system, ContactManagementSystemWeb.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: System.get_env("SMTP_SERVER_NAME") || "smtp.gmail.com",
+  port: 587,
+  username: System.get_env("SMTP_USERNAME") || "example.user",
+  password: System.get_env("SMTP_PASSWORD") || "example.password",
+  tls: :if_available, # can be `:always` or `:never`
+  ssl: false, # can be `true`
+  retries: 1
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

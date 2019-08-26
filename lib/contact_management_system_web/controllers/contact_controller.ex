@@ -3,6 +3,7 @@ defmodule ContactManagementSystemWeb.ContactController do
 
   alias ContactManagementSystem.Contacts
   alias ContactManagementSystem.Contacts.Contact
+  alias ContactManagementSystemWeb.{Mailer, Email}
 
   action_fallback ContactManagementSystemWeb.FallbackController
 
@@ -16,6 +17,15 @@ defmodule ContactManagementSystemWeb.ContactController do
       Map.merge(contact_params, %{"user_id" => conn.private.guardian_default_resource.id})
 
     with {:ok, %Contact{} = contact} <- Contacts.create_contact(contact_params) do
+      user_list = ContactManagementSystem.Accounts.list_users
+
+      user_list
+      |> Enum.map(fn user ->
+        email = Email.new_contact_added(user.email, contact)
+
+        email |> Mailer.deliver_later
+      end)
+
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.contact_path(conn, :show, contact))
